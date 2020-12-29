@@ -1,42 +1,26 @@
-import randomcolor from "randomcolor"
-import React from "react"
+import React, { Component } from "react"
+import Conditional from "./Conditional"
 
-class App extends React.Component {
+class App extends Component {
   constructor() {
     super()
     this.state = {
-      count: 0
+      isLoading: true
     }
-    this.increment = this.increment.bind(this)
-  }
-
-  increment() {
-    this.setState(prevState => {
-      return {
-        count: prevState.count + 1
-      }
-    })
   }
 
   componentDidMount() {
-    console.log("Mounted")
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if(prevState.count !== this.state.count) {
-      const newColor = randomcolor() 
-      this.setState({color: newColor})
-    }
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+    }, 1500)
   }
 
   render() {
-    console.log("Render")
     return (
       <div>
-        <h1>{this.state.count}</h1>
-        <button onClick={this.increment}>
-          Increment!
-        </button>
+        <Conditional isLoading={this.state.isLoading}/>
       </div>
     )
   }
