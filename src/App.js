@@ -1,39 +1,42 @@
+import randomcolor from "randomcolor"
 import React from "react"
-import TodoItem from "./TodoItem"
-import todosData from "./todosData"
 
 class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      todos: todosData
+      count: 0
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.increment = this.increment.bind(this)
   }
 
-  handleChange(id) {
+  increment() {
     this.setState(prevState => {
-      const updatedTodos = prevState.todos.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !todo.completed
-          }
-        }
-        return todo
-      })
       return {
-        todos: updatedTodos
+        count: prevState.count + 1
       }
     })
   }
 
-  render() {
-    const todoItems = this.state.todos.map(item => <TodoItem key={item.id} item={item} handleChange={this.handleChange}/>)
+  componentDidMount() {
+    console.log("Mounted")
+  }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.count !== this.state.count) {
+      const newColor = randomcolor() 
+      this.setState({color: newColor})
+    }
+  }
+
+  render() {
+    console.log("Render")
     return (
-      <div className="todo-list">
-        {todoItems}
+      <div>
+        <h1>{this.state.count}</h1>
+        <button onClick={this.increment}>
+          Increment!
+        </button>
       </div>
     )
   }
