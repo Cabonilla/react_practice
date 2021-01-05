@@ -1,10 +1,21 @@
 import React from "react"
-import FormaContainer from "./FormaContainer"
+import Header from './Header'
+import MemeGenerator from "./MemeGenerator"
 
-function App() {
-    return (
-        <FormaContainer />
-    )
+class App extends React.Component {
+    constructor() {
+        super()
+        this.state = {}
+    }
+
+    render() {
+        return (
+            <div>
+                <Header/>
+                <MemeGenerator/>
+            </div>
+        )
+    }
 }
 
 export default App
