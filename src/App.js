@@ -1,66 +1,29 @@
-import React, { Component } from 'react';
+import randomcolor from 'randomcolor'
+import React, { useEffect, useState } from 'react'
 
-// first we will make a new context
-const MyContext = React.createContext();
+function App() {
+    const [count, setCount] = useState(0)
+    const [color, setColor] = useState("")
 
-// Then create a provider Component
-class MyProvider extends Component {
-  state = {
-    name: 'Wes',
-    age: 100,
-    cool: true
-  }
-  render() {
+    function increment() {
+        setCount(prevCount => prevCount + 1)
+    }
+
+    function decrement() {
+        setCount(prevCount => prevCount - 1)
+    }
+
+    useEffect(() => {
+        setColor(randomcolor())
+    }, [count])
+
     return (
-      <MyContext.Provider value={{
-        state: this.state,
-        growAYearOlder: () => this.setState({
-          age: this.state.age + 1
-        })
-      }}>
-        {this.props.children}
-      </MyContext.Provider>
-    )
-  }
-}
-
-const Family = (props) => (
-  <div className="family">
-    <Person />
-  </div>
-)
-
-class Person extends Component {
-  render() {
-    return (
-      <div className="person">
-        <MyContext.Consumer>
-          {(context) => (
-            <React.Fragment>
-              <p>Age: {context.state.age}</p>
-              <p>Name: {context.state.name}</p>
-              <button onClick={context.growAYearOlder}>🍰🍥🎂</button>
-            </React.Fragment>
-          )}
-        </MyContext.Consumer>
-      </div>
-    )
-  }
-}
-
-
-class App extends Component {
-  render() {
-    return (
-      <MyProvider>
         <div>
-          <p>I am the app</p>
-          <Family />
+            <h1 style={{color: color}}>{count}</h1>
+            <button onClick={increment}>Increment!</button>
+            <button onClick={decrement}>Decrement!</button>
         </div>
-      </MyProvider>
-    );
-  }
+    )
 }
 
-
-export default App;
+export default App
